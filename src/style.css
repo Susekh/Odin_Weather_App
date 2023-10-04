@@ -1,0 +1,29 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body, html{
+    height: 100;
+    width: 100;
+}
+
+
+#container{
+    display: flex;
+    justify-content: center;
+}
+
+
+.form-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    border: 2px solid black;
+    padding: 2rem;
+    width: 500px;
+    margin-top: 25vh;
+    border-radius: 17px;
+}
+
