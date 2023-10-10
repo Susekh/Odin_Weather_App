@@ -15,6 +15,13 @@ function mainConentLoader() {
   geoLoaderDiv.classList.add('geoLoaderStyle');
   geoLoaderDiv.innerHTML = 'Data related to location will be here';
 
+  async function getGif(weatherData) {
+    const res = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=fb53Tmpqn5oL06eyCrRRN2LWDtbMb9Bh&s=${weatherData.current.condition.text} weather aesthetic &weirdness=7`, { mode: 'cors' });
+    const weatherGif = await res.json();
+
+    return weatherGif;
+  }
+
   function takeInput() {
     formInput.innerHTML = `
     <label for="location">Enter the Location to get weather</label><br><br>
@@ -30,11 +37,17 @@ function mainConentLoader() {
   contentContainer.appendChild(showTempDiv);
 
   // fetch the weather api and console.log it
-  function renderShowTempDiv(weatherData) {
+  async function renderShowTempDiv(weatherData) {
     const showTemp = document.createElement('div');
     const imageVar = document.createElement('img');
     imageVar.classList.add('showContImg');
-    imageVar.src = `${weatherData.current.condition.icon}`;
+
+    // get gif from giphy partSSS
+
+    const weatherGif = await getGif(weatherData);
+
+    imageVar.src = `${weatherGif.data.images.fixed_width_small.url}`;
+
     showTemp.classList.add('show-temp');
     showTempDiv.innerHTML = '';
     showTemp.innerHTML = `<p>Temp in celsius = ${weatherData.current.temp_c} °c<br>
@@ -64,11 +77,12 @@ function mainConentLoader() {
     geoLoaderDiv.appendChild(showLocation);
   }
 
-  async function getWeather() {
+  async function getApiDatas() {
     const getLocation = document.getElementById('location').value;
     try {
       const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=10d8920911ff496591871009231009&q=${getLocation}`, { mode: 'cors' });
       const weatherData = await response.json();
+
       renderShowTempDiv(weatherData);
       renderGeoLoader(weatherData);
     } catch (err) {
@@ -79,7 +93,7 @@ function mainConentLoader() {
 
   formInput.addEventListener('submit', (e) => {
     e.preventDefault();
-    getWeather();
+    getApiDatas();
   });
 }
 

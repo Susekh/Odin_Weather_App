@@ -91,6 +91,9 @@ body, html{
 
 .showContImg{
     margin-left: 15rem;
+    border-radius: 10px;
+    height: 4rem;
+    width: 5rem;
 }
 
 
